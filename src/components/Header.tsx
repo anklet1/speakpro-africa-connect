@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { BookOpen, Menu, X } from 'lucide-react';
@@ -33,14 +34,41 @@ const courseCategories: { title: string; href: string; description: string }[] =
 const navLinks = [
   { name: 'Live', href: '#' },
   { name: 'Practice', href: '#features' },
-  { name: 'Pricing', href: '#' },
+  { name: 'Pricing', href: '#pricing' },
 ];
 
-const allNavLinks = [{ name: 'Courses', href: '#' }, ...navLinks];
+const allNavLinks = [{ name: 'Courses', href: '#courses' }, ...navLinks];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { toast } = useToast();
+
+  const handleScroll = (id: string) => {
+    if (id.startsWith('#')) {
+      id = id.substring(1);
+    }
+    
+    const element = document.getElementById(id);
+    if (element) {
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+        // Timeout to allow menu to close before scrolling
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      } else {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+  
+  const handleLinkClick = (href: string) => {
+    if (href.startsWith('#')) {
+      handleScroll(href);
+    } else {
+      // Handle external links or other routing here if needed
+    }
+  };
 
   const handleAuthClick = (type: 'Log In' | 'Sign Up') => {
     toast({
@@ -59,7 +87,7 @@ export function Header() {
               <span className="text-xl font-bold text-foreground">SpeakPro Africa</span>
             </a>
           </div>
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-2">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -97,9 +125,9 @@ export function Header() {
               </NavigationMenuList>
             </NavigationMenu>
             {navLinks.map((link) => (
-              <a key={link.name} href={link.href} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <Button key={link.name} variant="ghost" onClick={() => handleLinkClick(link.href)} className="text-sm font-medium text-muted-foreground hover:text-foreground">
                 {link.name}
-              </a>
+              </Button>
             ))}
           </div>
           <div className="hidden md:flex items-center space-x-4">
@@ -117,9 +145,13 @@ export function Header() {
         <div className="md:hidden bg-background border-t border-border">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {allNavLinks.map((link) => (
-              <a key={link.name} href={link.href} className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent">
+              <button
+                key={link.name}
+                onClick={() => handleLinkClick(link.href)}
+                className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent"
+              >
                 {link.name}
-              </a>
+              </button>
             ))}
           </div>
           <div className="pt-4 pb-3 border-t border-border">
