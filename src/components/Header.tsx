@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { AuthDialog } from './AuthDialog';
+import { useNavigate } from 'react-router-dom';
 
 const courseCategories: { title: string; href: string; description: string }[] = [
   {
@@ -31,7 +32,7 @@ const courseCategories: { title: string; href: string; description: string }[] =
 ];
 
 const navLinks = [
-  { name: 'Live', href: '#' },
+  { name: 'Live', href: '/live' },
   { name: 'Practice', href: '#features' },
   { name: 'Pricing', href: '#pricing' },
 ];
@@ -42,6 +43,7 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [defaultAuthTab, setDefaultAuthTab] = useState<'login' | 'signup'>('login');
+  const navigate = useNavigate();
 
   const handleScroll = (id: string) => {
     if (id.startsWith('#')) {
@@ -66,7 +68,10 @@ export function Header() {
     if (href.startsWith('#')) {
       handleScroll(href);
     } else {
-      // Handle external links or other routing here if needed
+      navigate(href);
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
     }
   };
 
