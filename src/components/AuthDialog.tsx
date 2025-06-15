@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import {
@@ -43,6 +44,7 @@ const loginSchema = z.object({
 });
 
 const signupSchema = z.object({
+  fullName: z.string().min(1, { message: "Full name is required." }),
   email: z.string().email({ message: "Invalid email address." }),
   password: z.string().min(8, { message: "Password must be at least 8 characters." }),
 });
@@ -124,7 +126,7 @@ const SignUpForm = () => {
     const { toast } = useToast();
     const form = useForm<z.infer<typeof signupSchema>>({
       resolver: zodResolver(signupSchema),
-      defaultValues: { email: "", password: "" },
+      defaultValues: { fullName: "", email: "", password: "" },
     });
   
     function onSubmit(values: z.infer<typeof signupSchema>) {
@@ -146,6 +148,19 @@ const SignUpForm = () => {
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. John Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="email"
