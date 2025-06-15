@@ -1,14 +1,42 @@
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { BookOpen, Menu, X } from 'lucide-react';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+
+const courseCategories: { title: string; href: string; description: string }[] = [
+  {
+    title: "For Students",
+    href: "#",
+    description: "Master public speaking, debates, and interviews.",
+  },
+  {
+    title: "For Teachers",
+    href: "#",
+    description: "Enhance classroom control and persuasive communication.",
+  },
+  {
+    title: "For Creators",
+    href: "#",
+    description: "Perfect your video content delivery and on-screen presence.",
+  },
+];
 
 const navLinks = [
-  { name: 'Courses', href: '#' },
   { name: 'Live', href: '#' },
   { name: 'Practice', href: '#' },
   { name: 'Pricing', href: '#' },
 ];
+
+const allNavLinks = [{ name: 'Courses', href: '#' }, ...navLinks];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,6 +52,42 @@ export function Header() {
             </a>
           </div>
           <div className="hidden md:flex items-center space-x-6">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Courses</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      <li className="row-span-3">
+                        <NavigationMenuLink asChild>
+                          <a
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                            href="/"
+                          >
+                            <BookOpen className="h-6 w-6 text-primary" />
+                            <div className="mb-2 mt-4 text-lg font-medium text-foreground">
+                              SpeakPro Africa
+                            </div>
+                            <p className="text-sm leading-tight text-muted-foreground">
+                              Unlock your voice. Inspire Africa. Courses for all levels.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+                      {courseCategories.map((component) => (
+                        <ListItem
+                          key={component.title}
+                          title={component.title}
+                          href={component.href}
+                        >
+                          {component.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
             {navLinks.map((link) => (
               <a key={link.name} href={link.href} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 {link.name}
@@ -44,7 +108,7 @@ export function Header() {
       {isMenuOpen && (
         <div className="md:hidden bg-background border-t border-border">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navLinks.map((link) => (
+            {allNavLinks.map((link) => (
               <a key={link.name} href={link.href} className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent">
                 {link.name}
               </a>
@@ -61,3 +125,29 @@ export function Header() {
     </header>
   );
 }
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";

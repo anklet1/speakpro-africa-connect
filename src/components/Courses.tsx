@@ -1,46 +1,59 @@
 
-import { CourseCard } from './CourseCard';
+import { CourseCard } from "@/components/CourseCard";
 
-const courses = [
+const coursesData = [
   {
-    title: 'Public Speaking Mastery: From Fear to Stage Presence',
-    instructor: 'Dr. Esi Ansah',
-    level: 'Beginner',
-    rating: 4.9,
-    reviewCount: 1245,
-    imageUrl: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=800&auto=format&fit=crop',
-  },
-  {
-    title: 'Persuasive Communication for Leaders and Innovators',
-    instructor: 'Vusi Thembekwayo',
-    level: 'Pro',
-    rating: 5.0,
-    reviewCount: 3890,
-    imageUrl: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800&auto=format&fit=crop',
-  },
-  {
-    title: 'Mastering Debates and High-Stakes Interviews',
-    instructor: 'Juliana Kanyomozi',
-    level: 'Intermediate',
+    title: "Public Speaking Mastery",
+    instructor: "Adaobi Nwosu",
+    level: "Beginner",
     rating: 4.8,
-    reviewCount: 852,
-    imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop',
+    reviewCount: 1200,
+    imageUrl: "/placeholder.svg",
   },
-];
+  {
+    title: "Advanced Persuasive Communication",
+    instructor: "Chinedu Okoro",
+    level: "Pro",
+    rating: 4.9,
+    reviewCount: 980,
+    imageUrl: "/placeholder.svg",
+  },
+  {
+    title: "Classroom Management for Teachers",
+    instructor: "Amina Bello",
+    level: "Intermediate",
+    rating: 4.7,
+    reviewCount: 750,
+    imageUrl: "/placeholder.svg",
+  },
+  {
+    title: "Video Content Delivery",
+    instructor: "Musa Adebayo",
+    level: "Intermediate",
+    rating: 4.6,
+    reviewCount: 500,
+    imageUrl: "/placeholder.svg",
+  },
+] as const;
 
 export function Courses() {
   return (
-    <section className="py-16 sm:py-24 bg-background">
+    <section id="courses" className="py-20 sm:py-24 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Featured Courses</h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Start your learning journey with our most popular courses.
+          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Our Popular Courses
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Find the right course to elevate your communication skills.
           </p>
         </div>
-        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {courses.map((course) => (
-            <CourseCard key={course.title} {...course} />
+        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {coursesData.map((course) => (
+            <CourseCard
+              key={course.title}
+              {...course}
+            />
           ))}
         </div>
       </div>
