@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,9 +5,11 @@ import { ThumbsUp, Share, User, Camera } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const Live = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const navigate = useNavigate();
     const [isCameraOn, setIsCameraOn] = useState(false);
     const streamRef = useRef<MediaStream | null>(null);
     const [comments, setComments] = useState<{ user: string; text: string }[]>([]);
@@ -36,18 +37,21 @@ const Live = () => {
         }
     };
 
-    const stopCamera = () => {
+    const stopCamera = (shouldNavigate = false) => {
         if (streamRef.current) {
             streamRef.current.getTracks().forEach(track => track.stop());
             streamRef.current = null;
             if (videoRef.current) videoRef.current.srcObject = null;
             setIsCameraOn(false);
+            if (shouldNavigate) {
+                navigate('/');
+            }
         }
     };
     
     const toggleStream = () => {
         if (isCameraOn) {
-            stopCamera();
+            stopCamera(true);
         } else {
             startCamera();
         }
