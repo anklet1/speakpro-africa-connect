@@ -2,6 +2,10 @@
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
+  const handleScroll = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative bg-background">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
@@ -16,8 +20,8 @@ export function Hero() {
             Master the art of communication with expert-led courses, live sessions, and AI-powered feedback. For students, teachers, and creators across Africa.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="w-full sm:w-auto">Explore Courses</Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto">Watch a Free Lesson</Button>
+            <Button size="lg" className="w-full sm:w-auto" onClick={() => handleScroll('courses')}>Explore Courses</Button>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => handleScroll('courses')}>Watch a Free Lesson</Button>
           </div>
         </div>
       </div>

@@ -21,7 +21,7 @@ const features = [
 
 export function Features() {
   return (
-    <section className="py-16 sm:py-24 bg-secondary">
+    <section id="features" className="py-16 sm:py-24 bg-secondary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Why SpeakPro Africa?</h2>

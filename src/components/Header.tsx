@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { BookOpen, Menu, X } from 'lucide-react';
@@ -11,6 +10,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 const courseCategories: { title: string; href: string; description: string }[] = [
   {
@@ -32,7 +32,7 @@ const courseCategories: { title: string; href: string; description: string }[] =
 
 const navLinks = [
   { name: 'Live', href: '#' },
-  { name: 'Practice', href: '#' },
+  { name: 'Practice', href: '#features' },
   { name: 'Pricing', href: '#' },
 ];
 
@@ -40,6 +40,14 @@ const allNavLinks = [{ name: 'Courses', href: '#' }, ...navLinks];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleAuthClick = (type: 'Log In' | 'Sign Up') => {
+    toast({
+      title: "Coming Soon!",
+      description: `${type} functionality is currently under construction.`,
+    });
+  };
 
   return (
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b border-border">
@@ -95,8 +103,8 @@ export function Header() {
             ))}
           </div>
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost">Log In</Button>
-            <Button>Sign Up</Button>
+            <Button variant="ghost" onClick={() => handleAuthClick('Log In')}>Log In</Button>
+            <Button onClick={() => handleAuthClick('Sign Up')}>Sign Up</Button>
           </div>
           <div className="md:hidden flex items-center">
             <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -116,8 +124,8 @@ export function Header() {
           </div>
           <div className="pt-4 pb-3 border-t border-border">
             <div className="px-5 flex items-center gap-4">
-              <Button variant="ghost" className="w-full">Log In</Button>
-              <Button className="w-full">Sign Up</Button>
+              <Button variant="ghost" className="w-full" onClick={() => handleAuthClick('Log In')}>Log In</Button>
+              <Button className="w-full" onClick={() => handleAuthClick('Sign Up')}>Sign Up</Button>
             </div>
           </div>
         </div>
