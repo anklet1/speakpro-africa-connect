@@ -7,7 +7,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { CtaSection } from "@/components/CtaSection";
 import { Footer } from "@/components/Footer";
 import { Pricing } from "@/components/Pricing";
-import ShareVideo from "@/components/ShareVideo";
+import GoLive from "@/components/GoLive";
 
 const Index = () => {
   return (
@@ -19,7 +19,7 @@ const Index = () => {
         <Courses />
         <Pricing />
         <Testimonials />
-        <ShareVideo />
+        <GoLive />
         <CtaSection />
       </main>
       <Footer />
